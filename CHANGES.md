@@ -1,6 +1,6 @@
 # Changes
 
-## Unreleased
+## v0.10.0
 
 ### Breaking Changes
 
