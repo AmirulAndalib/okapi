@@ -112,7 +112,7 @@ api.Use(func(c *okapi.Context) error {
 
 ### Wrapping Standard HTTP Middleware
 
-`UseMiddleware` adapts middleware written as `func(http.Handler) http.Handler` — the common pattern used by `gorilla/handlers`, `chi`, and similar libraries.
+`UseMiddleware` adapts middleware written as `func(http.Handler) http.Handler` — the common pattern used by `chi`, `rs/cors`, and similar libraries.
 
 ```go
 api.UseMiddleware(func(next http.Handler) http.Handler {
