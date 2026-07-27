@@ -43,17 +43,19 @@ o.UseMiddleware(func(next http.Handler) http.Handler {
 
 ```go
 import (
-    "github.com/gorilla/handlers"
     "github.com/jkaninda/okapi"
+    "github.com/rs/cors"
 )
 
 o := okapi.Default()
 
-// Use Gorilla's CORS middleware
-o.UseMiddleware(handlers.CORS(
-    handlers.AllowedOrigins([]string{"*"}),
-    handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE"}),
-))
+// Use rs/cors' CORS middleware
+c := cors.New(cors.Options{
+    AllowedOrigins: []string{"*"},
+    AllowedMethods: []string{"GET", "POST", "PUT", "DELETE"},
+})
+
+o.UseMiddleware(c.Handler)
 ```
 
 ## Handler Compatibility

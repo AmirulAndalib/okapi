@@ -40,7 +40,7 @@ import (
 	"github.com/jkaninda/okapi/okapitest"
 
 	"github.com/getkin/kin-openapi/openapi3"
-	"github.com/gorilla/mux"
+	mux "github.com/jkaninda/njia/muxcompat"
 )
 
 var testBaseURL = "http://localhost:8080"

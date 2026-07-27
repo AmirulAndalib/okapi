@@ -1,5 +1,16 @@
 # Changes
 
+## Unreleased
+
+### Breaking Changes
+
+- **The router now uses `github.com/jkaninda/njia/muxcompat` instead of the archived `github.com/gorilla/mux`.**
+  `muxcompat` is a drop-in replacement, so routing, path variables, strict-slash redirects and
+  `NotFound`/`MethodNotAllowed` handling behave as before and no application code needs to change.
+  The one exception is the already-deprecated `WithMuxRouter` option: its parameter type is now
+  `*muxcompat.Router`, so callers still passing a `*mux.Router` will no longer compile. The option is
+  a no-op in spirit — Okapi manages its own router — and will be removed in a future release.
+
 ## v0.6.2
 
 ### Fixes

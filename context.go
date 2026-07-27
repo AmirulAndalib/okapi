@@ -41,7 +41,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gorilla/mux"
+	mux "github.com/jkaninda/njia/muxcompat"
 	"gopkg.in/yaml.v3"
 )
 

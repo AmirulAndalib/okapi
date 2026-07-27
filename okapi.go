@@ -41,8 +41,8 @@ import (
 	"time"
 
 	"github.com/getkin/kin-openapi/openapi3"
-	"github.com/gorilla/mux"
 	goutils "github.com/jkaninda/go-utils"
+	mux "github.com/jkaninda/njia/muxcompat"
 )
 
 var (
@@ -289,8 +289,9 @@ func (r *Route) Use(m ...Middleware) {
 
 // WithMuxRouter sets the router for the Okapi instance.
 //
-// Deprecated: injecting a custom *mux.Router is no longer supported; Okapi
-// manages its own router internally. This option will be removed in a future
+// Deprecated: injecting a custom router is no longer supported; Okapi manages
+// its own router internally. The parameter type refers to
+// github.com/jkaninda/njia/muxcompat. This option will be removed in a future
 // release.
 func WithMuxRouter(router *mux.Router) OptionFunc {
 	return func(o *Okapi) {
