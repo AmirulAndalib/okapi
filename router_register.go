@@ -9,8 +9,6 @@ package okapi
 import (
 	"fmt"
 	"net/http"
-
-	"github.com/jkaninda/njia"
 )
 
 // mustRegister registers a handler and stops the program if the route table
@@ -30,8 +28,8 @@ import (
 //   - two routes naming the same path position differently, such as
 //     "/users/{id}" alongside "/users/{name}", which njia rejects because the
 //     captured name would otherwise depend on registration order.
-func (o *Okapi) mustRegister(method, path string, h http.HandlerFunc, opts ...njia.RouteOption) {
-	if err := o.router.njia.HandleFunc(method, path, h, opts...); err != nil {
+func (o *Okapi) mustRegister(method, path string, h http.HandlerFunc) {
+	if err := o.router.njia.HandleFunc(method, path, h); err != nil {
 		panic(fmt.Sprintf("okapi: cannot register route %s %s: %v", method, path, err))
 	}
 }
