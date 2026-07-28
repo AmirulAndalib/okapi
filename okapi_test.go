@@ -40,7 +40,7 @@ import (
 	"github.com/jkaninda/okapi/okapitest"
 
 	"github.com/getkin/kin-openapi/openapi3"
-	mux "github.com/jkaninda/njia/muxcompat"
+	"github.com/jkaninda/njia"
 )
 
 var testBaseURL = "http://localhost:8080"
@@ -287,7 +287,7 @@ func TestCustomConfig(t *testing.T) {
 	if err != nil {
 		return
 	}
-	router := mux.NewRouter()
+	router := njia.New()
 	o := New()
 	o.With(WithAddr(":8081"),
 		WithStrictSlash(true),
@@ -334,8 +334,10 @@ func TestRegisterRoutes(t *testing.T) {
 
 	// Method 1: Register directly to the app instance
 	app.Register(bookController.Routes()...)
-	// Method 2: Register using RegisterRoutes
-	RegisterRoutes(app, bookController.Routes())
+	// Method 2: Register using RegisterRoutes. It goes onto a second instance
+	// because registering the same definitions twice on one app is a duplicate
+	// route, which the router rejects rather than silently keeping the first.
+	RegisterRoutes(New(), bookController.Routes())
 
 	// Start server in background
 	go func() {
