@@ -245,7 +245,7 @@ func TestFirstPathSegment(t *testing.T) {
 		"/api":          "api",
 		"/api/v1/users": "api",
 		"api/v1":        "api",
-		"/{any:.*}":     "{any:.*}",
+		"/{any...}":     "{any...}",
 	}
 	for in, want := range cases {
 		if got := firstPathSegment(in); got != want {

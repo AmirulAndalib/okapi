@@ -64,22 +64,22 @@ func TestNormalizeRoutePath(t *testing.T) {
 		{
 			name:     "wildcard only",
 			input:    "/*",
-			expected: "/{any:.*}",
+			expected: "/{any...}",
 		},
 		{
 			name:     "named wildcard",
 			input:    "/*any",
-			expected: "/{any:.*}",
+			expected: "/{any...}",
 		},
 		{
 			name:     "custom wildcard name ignored",
 			input:    "/*path",
-			expected: "/{any:.*}",
+			expected: "/{any...}",
 		},
 		{
 			name:     "mixed params and wildcard",
 			input:    "/users/:id/books/*",
-			expected: "/users/{id}/books/{any:.*}",
+			expected: "/users/{id}/books/{any...}",
 		},
 	}
 

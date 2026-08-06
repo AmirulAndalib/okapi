@@ -183,9 +183,7 @@ func (o *Okapi) webHandler(prefix string, root http.FileSystem, c WebConfig) {
 		}
 		serveWebIndex(w, r, root, c.Index)
 	}
-	o.router.muxRouter.PathPrefix(prefix).
-		HandlerFunc(o.dispatchThroughChain(handler)).
-		Methods(http.MethodGet, http.MethodHead)
+	o.mountPrefix(prefix, o.dispatchThroughChain(handler), http.MethodGet, http.MethodHead)
 }
 
 func (o *Okapi) webExcluded(urlPath, prefix string, c WebConfig) bool {
@@ -211,7 +209,7 @@ func (o *Okapi) webExcluded(urlPath, prefix string, c WebConfig) bool {
 }
 
 func (o *Okapi) webNotFound(w http.ResponseWriter, r *http.Request) {
-	if h := o.router.muxRouter.NotFoundHandler; h != nil {
+	if h := o.router.njia.NotFound; h != nil {
 		h.ServeHTTP(w, r)
 		return
 	}

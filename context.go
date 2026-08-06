@@ -41,7 +41,7 @@ import (
 	"sync"
 	"time"
 
-	mux "github.com/jkaninda/njia/muxcompat"
+	"github.com/jkaninda/njia"
 	"gopkg.in/yaml.v3"
 )
 
@@ -262,7 +262,7 @@ func (c *Context) Referer() string {
 
 // PathParam retrieves a URL path parameter value.
 func (c *Context) PathParam(key string) string {
-	return mux.Vars(c.request)[key]
+	return njia.Param(c.request, key)
 }
 
 // Param is a short alias for PathParam.
@@ -279,7 +279,7 @@ func (c *Context) Path() string {
 //
 // Deprecated: use PathParam to retrieve individual path parameters instead.
 func (c *Context) Params() map[string]string {
-	return mux.Vars(c.request)
+	return njia.ParamMap(c.request)
 }
 
 // Query retrieves a URL query parameter value.

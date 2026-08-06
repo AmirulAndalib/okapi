@@ -64,7 +64,7 @@ func realIP(r *http.Request) string {
 }
 
 // normalizeRoutePath ensures a clean path starting with '/'
-// and converts ':param' to '{param}' and /* or /*any to /{any:.*} for mux compatibility.
+// and converts ':param' to '{param}' and /* or /*any to /{any...} for mux compatibility.
 func normalizeRoutePath(path string) string {
 	if !strings.HasPrefix(path, "/") {
 		path = "/" + path
@@ -73,11 +73,11 @@ func normalizeRoutePath(path string) string {
 	// Remove double slashes
 	path = strings.ReplaceAll(path, "//", "/")
 
-	// Convert /*any or /* to /{any:.*}
+	// Convert /*any or /* to /{any...}
 	if strings.HasSuffix(path, "/*") {
-		path = strings.TrimSuffix(path, "/*") + "/{any:.*}"
+		path = strings.TrimSuffix(path, "/*") + "/{any...}"
 	} else {
-		path = wildcardRegex.ReplaceAllString(path, "/{any:.*}")
+		path = wildcardRegex.ReplaceAllString(path, "/{any...}")
 	}
 
 	// Process each segment to convert :param or :param:type to {param}
@@ -248,4 +248,14 @@ func LoadJWKSFromFile(jwksInput string) (*Jwks, error) {
 func isBase64(input string) bool {
 	_, err := base64.StdEncoding.DecodeString(input)
 	return err == nil
+}
+
+// mountPattern turns a prefix into the catch-all template that serves it and
+// everything beneath it.
+func mountPattern(prefix string) string {
+	p := strings.TrimRight(prefix, "/")
+	if p != "" && !strings.HasPrefix(p, "/") {
+		p = "/" + p
+	}
+	return p + "/{any...}"
 }
